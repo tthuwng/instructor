@@ -88,6 +88,8 @@ async def process_response_async(
     # ? attaching usage data and the raw response to the model we return.
     if isinstance(model, IterableBase):
         logger.debug(f"Returning takes from IterableBase")
+        for task in model.tasks:
+            task._raw_response = response
         return [task for task in model.tasks]
 
     if isinstance(response_model, ParallelBase):
@@ -98,7 +100,8 @@ async def process_response_async(
         logger.debug(f"Returning model from AdapterBase")
         return model.content
 
-    model._raw_response = response
+    if isinstance(model, BaseModel):
+        model._raw_response = response
     return model
 
 
