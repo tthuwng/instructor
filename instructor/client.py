@@ -245,7 +245,6 @@ class AsyncInstructor(Instructor):
             validation_context=validation_context,
             max_retries=max_retries,
             messages=messages,
-            strict=strict,
             **kwargs,
         )
 
